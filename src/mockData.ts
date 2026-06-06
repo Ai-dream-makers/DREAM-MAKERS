@@ -239,9 +239,8 @@ export const mockAlertHistory: AlertLog[] = [
     type: 'low_battery',
     severity: 'warning',
     timestamp: '2026-06-06 05:30',
-    details: 'แบตเตอรี่สายรัดข้อมือต่ำกว่า 15% (Battery level: 12%)',
-    status: 'pending',
-    details: 'กรุณาแจ้งผู้ดูแลเพื่อนำสมาร์ทแบนด์เสียบชาร์จสายไฟ'
+    details: 'แบตเตอรี่สายรัดข้อมือต่ำกว่า 15% (Battery level: 12%) - กรุณาแจ้งผู้ดูแลเพื่อนำสมาร์ทแบนด์เสียบชาร์จสายไฟ',
+    status: 'pending'
   }
 ];
 

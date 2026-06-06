@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ShieldAlert, Phone, Users, Activity, Heart, Clock, CheckCircle2, MessageSquare, Plus, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldAlert, Phone, Users, Activity, CheckCircle2, Check } from 'lucide-react';
 import { Elder, AlertLog } from '../types';
 
 interface EmergencyAlertViewProps {
@@ -130,20 +130,7 @@ export default function EmergencyAlertView({
                 {/* Call buttons grid */}
                 <div className="space-y-2.5">
                   
-                  {/* Call 1: Call Elder's Wristband */}
-                  <button
-                    id="call-elder-btn"
-                    onClick={() => handleDial(elder.name, 'สมาร์ทแบนด์ SIM')}
-                    className="w-full py-3 px-4 bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold rounded-xl hover:bg-teal-100 transition-colors flex items-center justify-between cursor-pointer"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Heart className="w-4 h-4 text-teal-600" />
-                      โทรเข้าสายรัดข้อมือผู้สูงอายุเดี่ยว
-                    </span>
-                    <Phone className="w-3.5 h-3.5 text-teal-700" />
-                  </button>
-
-                  {/* Call 2: Call Primary Caregiver */}
+                  {/* Call 1: Call Primary Caregiver */}
                   {elder.emergencyContacts.length > 0 && (
                     <button
                       id="call-relative-btn"
@@ -158,7 +145,7 @@ export default function EmergencyAlertView({
                     </button>
                   )}
 
-                  {/* Call 3: Call Local Health Volunteer (อสม.) */}
+                  {/* Call 2: Call Local Health Volunteer (อสม.) */}
                   {elder.emergencyContacts.length > 1 && (
                     <button
                       id="call-vhealth-btn"
@@ -173,7 +160,7 @@ export default function EmergencyAlertView({
                     </button>
                   )}
 
-                  {/* Call 4: EMERGENCY RESCUE 1669 dispatch simulator */}
+                  {/* Call 3: EMERGENCY RESCUE 1669 dispatch simulator */}
                   <button
                     id="call-rescue-btn"
                     onClick={() => handleDial('หน่วยกู้ชีพสาธารณสุข 1669', '1669')}

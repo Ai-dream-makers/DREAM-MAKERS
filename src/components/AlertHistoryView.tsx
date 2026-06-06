@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AlertCircle, ToggleLeft, ShieldAlert, Cpu, Heart, CheckCircle2, Battery, RefreshCw, Filter, Search } from 'lucide-react';
 import { AlertLog, Elder } from '../types';
 

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Card } from 'lucide-react'; // Wait, standard lucide-react doesn't have custom card, use FileText, etc.
 import { FileText, Download, Share2, Mail, ExternalLink, MessageCircle, Heart, Footprints, Moon, CheckSquare } from 'lucide-react';
 import { Elder, HealthStats } from '../types';
 

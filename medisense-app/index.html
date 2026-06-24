@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediSense AI - Medical Triage System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+        }
+
+        @keyframes spin-smooth {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes progress-load {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+
+        .spin-smooth {
+            animation: spin-smooth 2s linear infinite;
+        }
+
+        .progress-load {
+            animation: progress-load 3s ease-in-out forwards;
+        }
+
+        /* Accessibility enhancements */
+        .text-large {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .btn-large {
+            padding: 16px 32px;
+            font-size: 18px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-large:active {
+            transform: translateY(0);
+        }
+
+        .input-large {
+            font-size: 16px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .input-large:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        /* Risk level colors */
+        .risk-low {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .risk-moderate {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .risk-high {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .risk-text-low {
+            color: #15803d;
+        }
+
+        .risk-text-moderate {
+            color: #92400e;
+        }
+
+        .risk-text-high {
+            color: #b91c1c;
+        }
+
+        /* QR Code simulation */
+        .qr-code {
+            background: linear-gradient(45deg, #000, #333, #000);
+            display: inline-block;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .status-low {
+            background-color: #dcfce7;
+            color: #15803d;
+            border: 2px solid #22c55e;
+        }
+
+        .status-moderate {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+
+        .status-high {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border: 2px solid #ef4444;
+        }
+
+        /* Card styles */
+        .card-modern {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .card-modern:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive typography */
+        @media (max-width: 640px) {
+            .btn-large {
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+
+            .text-large {
+                font-size: 16px;
+            }
+        }
+
+        /* Loading indicator */
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(34, 197, 94, 0.2);
+            border-top: 4px solid #22c55e;
+            border-radius: 50%;
+            animation: spin-smooth 1s linear infinite;
+        }
+
+        /* Symptom selector */
+        .symptom-card {
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .symptom-card:hover {
+            border-color: #22c55e;
+            background-color: #f0fdf4;
+        }
+
+        .symptom-card.selected {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        /* Range slider */
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #22c55e;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #22c55e;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+        }
+
+        /* Checkbox styling */
+        .checkbox-large {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        /* Header styling */
+        .header-shadow {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Form validation */
+        .input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2;
+        }
+
+        .error-text {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* Hospital card */
+        .hospital-card {
+            border-left: 5px solid #22c55e;
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Accessibility focus */
+        button:focus,
+        input:focus,
+        a:focus {
+            outline: 2px solid #22c55e;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app"></div>
+
+    <!-- Navigation Header (Persistent) -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="min-h-screen"></div>
+
+    <!-- Footer (Persistent) -->
+    <div id="footer-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
